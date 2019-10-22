@@ -60,12 +60,19 @@ vae = Model(input_img,y)
 vae.compile(optimizer='rmsprop',loss=None)
 vae.summary()
 
-(x_train,_),(x_test,y_test) = mnist.load_data()
+from tensorflow.examples.tutorials.mnist import input_data
+
+mnist = input_data.read_data_sets("E:\\pycharm_Data\\mnist_dataset", one_hot=True)
+
+x_train, y_train = mnist.train.images, mnist.train.labels
+x_test, y_test = mnist.test.images, mnist.test.labels
+
 
 x_train = x_train.astype('float32')/255.
 x_train = x_train.reshape(x_train.shape + (1,))
 x_test = x_test.astype('float32')/255.
 x_test = x_test.reshape(x_test.shape + (1,))
+print(type(x_test))
 
 vae.fit(x = x_train,y = None,
         shuffle=True,
